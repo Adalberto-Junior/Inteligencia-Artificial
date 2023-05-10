@@ -1,0 +1,144 @@
+1. Est´a a ser desenvolvido um robˆo para pesca submarina, o Nautilus, pedindo-se a sua
+colabora¸c˜ao no desenvolvimento do m´odulo de controlo. Este robˆo transporta um m´aximo
+de 10 arp˜oes e um dep´osito com capacidade para 20 peixes. Quando sente um peixe em
+frente lan¸ca imediatamente um arp˜ao (ac¸c˜ao Disparar ). Se o arp˜ao atingir um peixe, o robˆo
+guarda o peixe no dep´osito (ac¸c˜ao Agarrar ), podendo neste caso recuperar o arp˜ao. Caso
+contr´ario, o arp˜ao perde-se. Quando perder todos os arp˜oes, o Nautilus pode reabastecer-se
+(ac¸c˜ao Reabastecer ), ficando novamente com 10 arp˜oes. Quando o dep´osito de peixes estiver
+cheio, estes devem ser descarregados (ac¸c˜ao Descarregar ), ficando o dep´osito novamente
+vazio. Quando n˜ao tem mais nada para fazer, limita-se a vaguear (ac¸c˜ao Vaguear ).
+
+(a) Identifique as vari´aveis de estado, se necess´arias.
+n_peixes
+n_arpão
+
+(b) Identifique e caracterize um conjunto de predicados que possam ser usados para descrever situa¸c˜oes em que se encontre o Nautilus.
+sente_peixe
+peixe_atingido
+
+(c) Especifique o conjunto de regras situa¸c˜ao-ac¸c˜ao que regem o comportamento do Nautilus. Pode fazˆe-lo na forma de uma tabela com as serguintes colunas:
+• Situa¸c˜ao - uma conjun¸c˜ao de condi¸c˜oes em l´ogica de primeira ordem
+• Actualiza¸c˜ao - actualiza¸c˜ao das vari´aveis de estado, caso existam
+
+Situação								Atualização								Acção
+-----------------------------------------------------------------------------------------------------------------------
+sente_peixe &							n_arpoes <- n_arpoes-1						Disparar
+n_arpoes>0 & n_peixes<20 & ~peixe_atingido
+-----------------------------------------------------------------------------------------------------------------------
+peixe_atingido							n_peixes <- n_peixes+1						Agarrar
+									n_arpoes<- n_arpoes+1
+-----------------------------------------------------------------------------------------------------------------------
+n_arpoes == 0							n_arpoes<- 10							rebastecer
+-----------------------------------------------------------------------------------------------------------------------
+n_peixes == 20							n_peixes <- 10							descarregar
+-----------------------------------------------------------------------------------------------------------------------
+~sete_peixe & ~peixe_atingido														vaguear
+& n_arpoes > 0 & n_peixe < 20		
+-----------------------------------------------------------------------------------------------------------------------
+
+
+
+III.2
+2. Considere o mundo dos blocos com n blocos representados pelas constantes (B1, B2, . . . , Bn),
+predicado On(x, y) que indica que o bloco x est´a em cima do objecto y e o predicado
+Clear(x) que indica que o bloco x n˜ao tem nenhum bloco em cima. Indique qual o n´umero
+m´ınimo de blocos para que cada uma das f´ormulas seguintes seja verdadeira:
+
+(a) ¬Clear(B1) ∧ ¬Clear(B2) ∧ ∃x(On(B3, x) ∧ x 6= Floor)
+R: 3
+		 |B3|
+	       |B2|
+_____________|B1|_______________
+(b) Clear(B1) ⇒ Clear(B2)
+	~Clear(B1) V Clear(B2)
+R:2
+
+
+_____|B1|___|B2|___
+
+     |B2|
+_____|B1|_________
+
+III.3
+
+3. Considere o seguinte mundo composto por uma torneira, dois tanques (T1 e T2) e um
+recipiente (R). A torneira pode estar aberta para um dos dois tanques mas nunca para os
+dois ao mesmo tempo. O recipiente pode ser colocado dentro de um tanque, desde que este
+esteja sem ´agua. Se a torneira estiver aberta, ent˜ao o tanque respectivo ou o recipiente (se
+estiver dentro do tanque) ficam com ´agua. Se o recipiente estiver dentro de um tanque, e
+a torneira estiver aberta para esse tanque, ent˜ao o recipiente fica com ´agua, mas o tanque
+n˜ao. Tanto os tanques como o recipiente podem ter ´agua mesmo que a torneira n˜ao esteja
+aberta para eles.
+
+Considere os seguintes predicados:
+
+	• W ater(x) indica que x (recipiente ou tanque) tem ´agua;
+	• Open(x) que indica que a torneira est´a aberta para o tanque x;
+	• Over(x, y) que indica que o recipiente x est´a colocado sobre o tanque y.
+
+(a) Para cada uma das observa¸c˜oes seguintes, apresente os valores l´ogicos poss´ıveis para
+W ater(T1), W ater(T2) e W ater(R).
+							___Water(T1)_________Water(T2)__________Water(R)_____
+i. 	Open(T2) ∧ Over(R, T2)  --> 			     V,F			F			V
+ii. 	Open(T2) ∧ Over(R, T1) -->				F			V			V,F
+iii.	 ¬Open(T2) ∧ Over(R, T1)->				F			V,F			V,F
+iv.	 ¬Open(T1) ∧ ¬Open(T2) ∧ Over(R, T1)->	      F			V,F			V,F
+
+(b) Diga se cada uma das seguintes f´ormulas ´e satisfat´ıvel, e caso seja, se ´e uma tautologia:
+						----------------->Satisfativel------------>tautologia
+i. ∀x (¬(¬Open(x) ⇒ W ater(x)))					  sim					não
+  ∀x (¬(Open(x)  v  W ater(x)))
+     ∀x (¬Open(x) &  W ater(x))			
+
+ii. ∀x (¬(Open(x) ⇒ W ater(x)))
+       ∀x (¬(~Open(x) v W ater(x)))
+       ∀x (Open(x)  & ~ W ater(x))					   sim				não					
+
+iii. ∀x (Open(x) ⇒ ∃y W ater(y))					   sim				sim
+
+iv. ∃x ∃y (Open(x) ∧ Open(y) ∧ x != y)				   não					
+
+
+10. Considere um dom´ınio composto por animais, esp´ecies e intervalos de tempo, no qual o
+conhecimento pode ser descrito atrav´es dos seguintes predicados:
+
+• Animal(a): a ´e um animal
+• Esp´ecie(a,e): o animal a ´e da esp´ecie e
+• Vivo(a,t): o animal a est´a vivo no intervalo t
+• Extinta(e,t): a exp´ecie e est´a extinta no intervalo t
+• Progenitor (p,a): o animal p ´e progenitor do animal a
+
+(a) Represente as seguintes frases em l´ogica de primeira ordem:
+
+• Qualquer animal tem um progenitor
+
+∀a animal(a)  ⇒ ∃p progenitor(p,a)
+
+• Qualquer animal pertence a uma esp´ecie
+
+∀a animal(a)  ⇒ ∃e especie(a,e)
+
+• Apenas os animais pertencem a esp´ecies
+
+∀x ∀e especie(x,e)  ⇒ animal(x)
+
+• Se p ´e o progenitor de a e a pertence a uma esp´ecie e, ent˜ao p tamb´em pertence a e
+
+∀p ∀a ∀e progenitor(a,p) & especie(a,e) ⇒ especie(p,e)
+∀p ∀e (∃a progenitor(p,a) & especie(a,e) ⇒ especie(p,e)
+
+• Uma esp´ecie e est´a extinta no intervalo t se nenhum animal dessa esp´ecie est´a vivo nesse intervalo
+
+∀t ∀a  ∀e (Animal(a) & Especie(a,e) & ~Vivo(a,t)) ⇒ Extinta(e,t)
+
+∀t ∀e  ~(~∃a Animal(a) & Especie(a,e) & Vivo(a,t)) v Extinto(e,t)
+∀t ∀e  (~∃a Animal(a) & Especie(a,e) & Vivo(a,t)) ⇒ Extinto(e,t) 1
+∀t ∀e ∃a (Animal(a) & Especie(a,e) & Vivo(a,t)) V Extinto(e,t)
+
+• N˜ao existiam mamutes vivos no ano de 1918
+~∃m Animal(m) & Especie(m,Mamute) & Vivo(m,1918) 2
+
+(b) Demonstre que os mamutes estavam extintos em 1918 a partir das f´ormulas que escreveu.
+Modus Ponens (1)(2)								{A, A ⇒ B}
+
+
